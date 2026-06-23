@@ -32,6 +32,37 @@ api = create_client()
 print(api.currencies())
 ```
 
+## Endpoints
+
+All 14 endpoints are methods on the `api` client. `*` marks a required argument; the rest are optional. `from`/`date` become `var_from`/`var_date` (reserved words). **Public** = no key; **Free** = any plan with a key; **Growth** = Growth plan or higher.
+
+| Endpoint | Call | Plan |
+| --- | --- | --- |
+| Convert an amount (optional PPP) | `api.convert(var_from*, to*, amount, ppp, var_date)` | Free |
+| Rate snapshot for a date (USD base) | `api.rates(var_date)` | Free |
+| Rate snapshot in any base | `api.rates_by_base(base*, var_date)` | Free |
+| One currency's daily time series | `api.history(currency*, var_from, to, base, interval)` | Growth |
+| Trends, comparisons & movers | `api.history_analysis(base, currencies, var_from, to, period, sort, asset_class, limit, interval, stats)` | Growth |
+| PPP factor over time / movers | `api.ppp_analysis(countries, var_from, to, period, sort, limit, stats)` | Growth |
+| Volatility or stability ranking | `api.volatility(currency, base, var_from, to, sort, universe, limit)` | Growth |
+| Return correlation vs a base | `api.correlation(currencies*, base, var_from, to)` | Growth |
+| Max drawdown or ranking | `api.drawdown(currency, base, var_from, to, sort, universe, limit)` | Growth |
+| Safe-haven score ranking | `api.safe_haven(currencies, base, var_from, to, limit)` | Growth |
+| Mean-reversion ranking | `api.mean_reversion(currencies, base, var_from, to, limit)` | Growth |
+| Supported countries + currencies | `api.countries()` | Public |
+| Supported ISO 4217 currencies | `api.currencies()` | Public |
+| Natural-language question | `api.ai(q*)` | Free |
+
+More calls:
+
+```python
+api.rates()                                          # latest snapshot (USD base)
+api.rates_by_base(base="EUR")                        # same snapshot, EUR base
+api.history(currency="INR", var_from="2024-01-01")
+api.volatility(universe="majors", sort="volatile")   # most-volatile majors
+api.ai(q="How has the rupee moved this year?")
+```
+
 ## API key
 
 `create_client` resolves the key as `api_key` → `CURRENCYCORE_API_KEY`.
