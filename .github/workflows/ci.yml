@@ -14,21 +14,27 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: pip install -e .
-      - run: python -c "import currencycore; from currencycore.client import create_client; create_client(api_key='x')"
+      - run: pip install build
+      - run: python -m build
+      - run: pip install dist/*.whl
+      - run: python -c "from currencycore.client import create_client; print('ok')"
 
+  # Trusted publishing (OIDC) — no API token needed.
+  # Enable at https://pypi.org/manage/account/publishing/ for project
+  # "currencycore", owner "CurrencyCore", repo "currencycore-python",
+  # workflow "ci.yml", environment "pypi".
   publish:
     needs: build
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: pip install build twine
+      - run: pip install build
       - run: python -m build
-      - run: twine upload dist/*
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+      - uses: pypa/gh-action-pypi-publish@release/v1

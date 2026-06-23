@@ -4,3 +4,4 @@ git_push.sh
 .travis.yml
 .gitlab-ci.yml
 .openapi-generator-ignore
+pyproject.toml
