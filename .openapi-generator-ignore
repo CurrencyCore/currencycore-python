@@ -5,3 +5,4 @@ git_push.sh
 .gitlab-ci.yml
 .openapi-generator-ignore
 pyproject.toml
+.github/workflows/python.yml
