@@ -1,6 +1,6 @@
 [project]
 name = "currencycore"
-version = "0.1.1"
+version = "0.1.2"
 description = "Official CurrencyCore API client - currency conversion, FX rates, PPP, and analytics."
 authors = [{ name = "CurrencyCore", email = "dev@currency-core.com" }]
 readme = "README.md"
